@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProfileHeader from "./ProfileHeader"
+import { FaSearch } from 'react-icons/fa'; // Import Search icon
+import ProfileHeader from "./ProfileHeader";
+
 
 export const SearchBar = () => {
   const [query, setQuery] = useState('');
+  const [isSearchVisible, setIsSearchVisible] = useState(false); // Toggle search visibility for small screens
   const navigate = useNavigate();
 
   const handleSearch = () => {
@@ -18,32 +21,77 @@ export const SearchBar = () => {
     }
   };
 
+  const toggleSearchVisibility = () => {
+    setIsSearchVisible((prev) => !prev); // Toggle the search input and button visibility
+  };
+
   return (
-    <div>
-      <div className="flex space-x-10 pt-10 w-full dark:bg-slate-800 z-10 ">
-        <div className="bottom-8 relative left-10 ">
+    <div className="w-full dark:bg-slate-800 z-10 flex items-center justify-between p-4 md:p-6  relative -top-4">
+      {/* Small screen: Logo and Brand */}
+      <div className="md:hidden flex items-center space-x-4">
+      
+        <span className="text-xl font-bold dark:text-white">Ninsau Elabs</span>
+      </div>
+
+      {/* Search and Profile Section */}
+      <div className="flex items-center space-x-4 w-full justify-between">
+        {/* Larger Screen: Profile and Search */}
+        <div className="hidden md:flex items-center space-x-4 w-full">
           <input
             type="text"
             placeholder="Search for books..."
-            className="p-2 pr-96   dark:text-gray-800 text-xl rounded-md border border-black " 
+            className="p-2 pr-96 dark:text-gray-800 text-xl rounded-md border border-black"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyPress={handleKeyPress}
           />
-        </div>
-        <div className="relative bottom-8 left-5">
           <button
-            className="relative p-2 border justify-center text-xl bg-white dark:bg-slate-800 text-center rounded-md pl-5 pr-5"
+            className="p-2 border justify-center text-xl bg-white dark:bg-slate-800 text-center rounded-md pl-5 pr-5"
             onClick={handleSearch}
           >
             Search
           </button>
+          <div className='pl-60'>
+            <ProfileHeader /> 
+            
+            </div>{/* ProfileHeader is only visible on larger screens */}
         </div>
-        <div className=' justify-end flex relative left-40 -top-8'>
-          <ProfileHeader/>
+
+        {/* Small Screen: Search Icon and Toggle */}
+        <div className="md:hidden flex items-center justify-end  w-full">
+          {!isSearchVisible && (
+            <div className="flex items-center space-x-4">
+              {/* Search icon for smaller screens */}
+              <FaSearch
+                className="text-2xl dark:text-white cursor-pointer"
+                onClick={toggleSearchVisibility}
+              />
+              {/* ProfileHeader visible when search input is hidden */}
+              <ProfileHeader />
+            </div>
+          )}
+
+          {/* Small Screen: Show input field when search icon is clicked */}
+          {isSearchVisible && (
+            <div className="flex items-center space-x-2 w-full">
+              <input
+                type="text"
+                placeholder="Search for books..."
+                className="p-2 w-full dark:text-gray-800 text-xl rounded-md border border-black"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <button
+                className="p-2 text-xl bg-white dark:bg-slate-800 rounded-md"
+                onClick={handleSearch}
+              >
+                <FaSearch className="text-xl" /> {/* Search icon as button */}
+              </button>
+            </div>
+          )}
         </div>
       </div>
-      
     </div>
   );
 };

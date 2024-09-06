@@ -53,8 +53,8 @@ const ProfileHeader = () => {
       </button>
       <div className="flex items-center bg-white p-1 rounded-full shadow-md">
         <img src={profileImage} alt="Profile" className="w-10 h-10 rounded-full mr-2" />
-        <span className="text-black font-semibold">Thanh Pham</span>
-        <span className="ml-2 text-black">▼</span>
+        
+        <span className="m text-black">▼</span>
       </div>
       {notificationsVisible && (
         <Notifications onClose={handleCloseNotifications} />

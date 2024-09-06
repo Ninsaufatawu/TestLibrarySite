@@ -3,11 +3,19 @@ import { AiOutlineSetting, AiOutlineTag } from 'react-icons/ai';
 import { MdEventAvailable } from "react-icons/md";
 import { FaHome, FaHeart, FaQuestionCircle } from 'react-icons/fa';
 
+
 const SideBar = () => {
   return (
     <>
       {/* Sidebar for larger screens */}
-      <div className="h-screen w-60 dark:bg-slate-700 bg-slate-50 flex flex-col p-4 md:w-72 hidden md:flex">
+      <div className="h-screen top-10 w-60 dark:bg-slate-700 bg-slate-50 flex flex-col p-4 md:w-72 hidden md:flex">
+        <div className="flex items-center mb-6">
+         
+          <div>
+            <h1 className="text-xl font-bold justify-center p-2 pl-16 dark:text-white">NINSAU LABS</h1>
+            
+          </div>
+        </div>
         <nav className="flex-1 text-lg font-medium">
           <ul className="space-y-2">
             <li>
