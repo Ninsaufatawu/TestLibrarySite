@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import booksData from '../books.json'; // Import your local JSON file
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const CategoryPage = () => {
   const { category } = useParams(); // Get the category from the URL
@@ -32,6 +33,15 @@ export const CategoryPage = () => {
   }, [category]);
 
   return (
+    <>
+    <div className='pb-14 p-8'>
+        <Link to={"/"} className='flex gap-4'>
+          <div className='pt-2 text-xl'>
+            <FaArrowLeft />
+          </div>
+          <p className='font-bold text-2xl'>Back Home</p>
+        </Link>
+      </div>
     <div className="p-8 dark:bg-gray-800 dark:text-white">
       <h1 className="text-3xl font-bold mb-8">{category || 'All Books'}</h1>
       {books.length === 0 ? (
@@ -63,6 +73,7 @@ export const CategoryPage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

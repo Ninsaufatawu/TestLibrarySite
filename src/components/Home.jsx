@@ -13,18 +13,22 @@ export const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    try {
-      // Directly use local JSON data
-      const categorizedBooks = booksData.categories || {}; // Adjust based on actual structure
+    const fetchBooks = async () => {
+      try {
+        // Simulate fetching data from a local JSON file
+        // Assuming booksData is an object with categories
+        const categorizedBooks = booksData.categories || {}; // Adjust based on actual structure
 
-      dispatch(setBooksByCategory(categorizedBooks)); // Dispatch to Redux
-    } catch (error) {
-      console.error("Error loading books:", error);
-      setError("Failed to load books. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
+        dispatch(setBooksByCategory(categorizedBooks)); // Dispatch to Redux
+      } catch (error) {
+        console.error("Error loading books:", error);
+        setError("Failed to load books. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchBooks();
     dispatch(clearSearchResults()); // Clear any previous search results
   }, [dispatch]);
 
@@ -52,17 +56,20 @@ export const Home = () => {
                   {category}
                 </Link>
               </h2>
-              <div className="overflow-x-scroll w-full flex gap-20" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="overflow-x-auto flex gap-10 scrollbar-hide">
                 {booksByCategory[category].map((book) => (
-                  <div key={book.id} className="rounded-xl drop-shadow-2xl w-36">
+                  <div
+                    key={book.id}
+                    className="flex-shrink-0 w-1/2 md:w-36 rounded-xl drop-shadow-2xl" // Responsive widths
+                  >
                     <Link to={`/book/${book.id}`}>
                       <div className="relative gap-1 justify-center text-center pt-4">
                         {book.image && (
-                          <img src={`/uploads/${book.image}`} alt={book.title} className='w-52 h-48 object-cover' />
+                          <img src={`/uploads/${book.image}`} alt={book.title} className='w-full h-48 object-cover rounded-t-xl' />
                         )}
                       </div>
-                      <div className='pt-5'>
-                        <button className="p-2 border justify-center text-lg dark:bg-slate-800 text-center rounded-md w-36 bg-blue-600 text-white">
+                      <div className='pt-2'>
+                        <button className="p-2 border justify-center text-sm md:text-lg dark:bg-slate-800 text-center rounded-md w-full bg-blue-600 text-white">
                           Read More
                         </button>
                       </div>
@@ -77,3 +84,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;
