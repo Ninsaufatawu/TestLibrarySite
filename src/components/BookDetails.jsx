@@ -13,7 +13,7 @@ export const BookDetails = () => {
       let foundBook = null;
       for (const category in booksData.categories) {
         const booksInCategory = booksData.categories[category];
-        foundBook = booksInCategory.find(book => book.id === parseInt(id));
+        foundBook = booksInCategory.find((book) => book.id === parseInt(id));
         if (foundBook) break;
       }
       setBook(foundBook);
@@ -24,21 +24,21 @@ export const BookDetails = () => {
 
   useEffect(() => {
     const favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
-    const isFavorited = favoriteBooks.some(favBook => favBook.id === parseInt(id));
+    const isFavorited = favoriteBooks.some((favBook) => favBook.id === parseInt(id));
     setIsBookmarked(isFavorited);
   }, [id]);
 
   const handleBookmark = () => {
     if (book) {
       let favoriteBooks = JSON.parse(localStorage.getItem('favoriteBooks')) || [];
-      const alreadyBookmarked = favoriteBooks.some(favBook => favBook.id === book.id);
+      const alreadyBookmarked = favoriteBooks.some((favBook) => favBook.id === book.id);
 
       if (!alreadyBookmarked) {
         favoriteBooks.push(book);
         localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
         setIsBookmarked(true);
       } else {
-        favoriteBooks = favoriteBooks.filter(favBook => favBook.id !== book.id);
+        favoriteBooks = favoriteBooks.filter((favBook) => favBook.id !== book.id);
         localStorage.setItem('favoriteBooks', JSON.stringify(favoriteBooks));
         setIsBookmarked(false);
       }
@@ -95,26 +95,25 @@ export const BookDetails = () => {
         </Link>
       </div>
 
-      <div className="p-4 md:pt-0 md:p-8 dark:bg-gray-800 dark:text-white mx-auto bg-white ">
-      <div className="relative w-full pt-20 bg-transparent sm:bg-gradient-to-r sm:from-gray-700 sm:to-gray-900 text-white md:p-14 rounded-lg mb-8">
-        <div className="flex flex-col md:flex-row pl-96 justify-between items-center">
-          <div className="text-center md:text-left">
-            <h1 className="text-3xl md:text-5xl font-bold">{book.title}</h1>
-            <p className="text-xl md:text-2xl text-gray-300">{book.author}</p>
-          </div>
-          <div className="mt-4 md:mt-0">
-            <FaBookmark
-              onClick={handleBookmark}
-              className={`cursor-pointer ${isBookmarked ? 'text-yellow-500' : 'text-white'}`}
-              size={30}
-            />
+      <div className="p-4 md:pt-0 md:p-8 dark:bg-gray-800 dark:text-white mx-auto bg-white">
+        <div className="relative w-full pt-20 bg-transparent sm:bg-gradient-to-r sm:from-gray-700 sm:to-gray-900 text-white md:p-14 rounded-lg mb-8">
+          <div className="hidden md:flex flex-col md:flex-row justify-between items-center md:pl-96">
+            <div className="text-center md:text-left">
+              <h1 className="text-3xl md:text-5xl font-bold">{book.title}</h1>
+              <p className="text-xl md:text-2xl text-gray-300">{book.author}</p>
+            </div>
+            <div className="mt-4 md:mt-0">
+              <FaBookmark
+                onClick={handleBookmark}
+                className={`cursor-pointer ${isBookmarked ? 'text-yellow-500' : 'text-white'}`}
+                size={30}
+              />
+            </div>
           </div>
         </div>
-      </div>
-
 
         {/* Image Section */}
-        <div className="relative z-10 pl-0 md:pl-32 -top-48 md:-top-36">
+        <div className="relative z-10 pl-0 md:pl-32 -top-20 md:-top-36">
           {book.image && (
             <img
               src={`/uploads/${book.image}`}
@@ -124,9 +123,9 @@ export const BookDetails = () => {
           )}
         </div>
 
-        {/* Mobile Layout */}
-        <div className="md:hidden flex flex-col items-start relative -top-40  pb-10"> {/* Align items to start */}
-          <div className="flex justify-between w-full mt-4 relative px-4">
+        {/* Mobile Layout for Title, Author, and Bookmark */}
+        <div className="md:hidden flex flex-col items-start mb-4">
+          <div className="flex justify-between w-full px-4">
             <div className="flex flex-col">
               <h1 className="text-3xl font-bold">{book.title}</h1>
               <p className="text-xl text-gray-700 mt-1">{book.author}</p>
@@ -137,7 +136,10 @@ export const BookDetails = () => {
               size={30}
             />
           </div>
+        </div>
 
+        {/* Content for Mobile Screens Only */}
+        <div className="md:hidden flex flex-col items-start mb-20">
           <div className="mt-6 w-full px-4">
             <h2 className="text-2xl font-bold">About</h2>
             <p className="mt-2 text-gray-700">{book.description}</p>
