@@ -30,7 +30,7 @@ export const SearchBar = () => {
       {/* Small screen: Logo and Brand */}
       <div className="md:hidden flex items-center space-x-4">
       
-        <span className="text-xl font-bold dark:text-white">Elabs</span>
+        <span className="text-xl font-bold dark:text-white">ninElabs</span>
       </div>
 
       {/* Search and Profile Section */}
