@@ -73,44 +73,75 @@ const articles = [
       Financial planning is crucial at any age, but it becomes even more important as retirement approaches. This workshop, tailored for those aged 50 and above, will cover essential topics such as investment strategies, estate planning, and managing retirement income. Expert financial advisors will be on hand to answer questions and provide personalized advice. Whether you’re just starting to think about retirement or are already retired, this workshop will offer valuable insights to help you secure your financial future.
     `,
   },
+  // Additional Content Below:
+  {
+    title: "Volunteer Opportunities for the 50+ Community",
+    tag: "Event",
+    content: `
+      The Volunteer Expo for the 50+ community is an excellent way to give back and stay active. Organizations from across various sectors will present volunteer opportunities that cater to the skills and passions of older adults. Whether you're interested in education, environmental work, or helping vulnerable populations, this expo will provide connections to roles that allow you to make a positive impact.
+    `,
+  },
+  {
+    title: "50+ Tech Learning Sessions",
+    tag: "Event",
+    content: `
+      These monthly tech learning sessions are designed to help individuals aged 50+ better understand how to use modern technology. From mastering smartphones to navigating social media, these workshops provide hands-on experience with experienced instructors. These sessions will also offer insights into online safety and how to stay connected with family and friends through tech.
+    `,
+  },
+  {
+    title: "Retirement Investment Seminar",
+    tag: "Event",
+    content: `
+      Hosted by financial experts, this seminar will focus on investment strategies tailored for individuals in or nearing retirement. Topics will include managing risk, diversifying portfolios, and optimizing retirement income streams. Attendees can also have one-on-one sessions with certified financial planners to discuss personal finance questions.
+    `,
+  },
+  {
+    title: "Caregiving and Family Support Conference",
+    tag: "Event",
+    content: `
+      This conference addresses the unique challenges faced by older adults who are caregivers for their spouses or aging parents. Experts in healthcare and family support services will offer advice and guidance on how to balance caregiving with personal well-being. Breakout sessions will cover legal considerations, emotional health, and available resources for caregivers.
+    `,
+  }
 ];
+
 
 export const NewsEventPage = () => {
   return (
-    <div className='flex' >
-    <div className=' fixed'>
-        <SideBar/>
-    </div>
-    <div className="p-8 dark:bg-gray-800 dark:text-white pl-72">
-      <h1 className="text-3xl font-bold mb-8 flex gap-3">
-        <div className='pt-1'>
-            <MdEventAvailable/>
-        </div>
-        News & Events</h1>
-      
-      {/* Render News Section */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-4">News</h2>
-        {articles.filter(article => article.tag === 'News').map((article, index) => (
-          <div key={index} className="mb-6">
-            <h3 className="text-xl font-bold">{article.title}</h3>
-            <p>{article.content}</p>
-          </div>
-        ))}
+    <div className='flex flex-col md:flex-row '>
+  <div className='md:fixed'>
+    <SideBar />
+  </div>
+  <div className="p-10 dark:bg-gray-800 dark:text-white md:pl-80">
+    <h1 className="text-2xl md:text-3xl font-bold mb-8 flex gap-3">
+      <div className='pt-1'>
+        <MdEventAvailable />
       </div>
+      News & Events
+    </h1>
 
-      {/* Render Events Section */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-semibold mb-4">Events</h2>
-        {articles.filter(article => article.tag === 'Event').map((article, index) => (
-          <div key={index} className="mb-6">
-            <h3 className="text-xl font-bold">{article.title}</h3>
-            <p>{article.content}</p>
-          </div>
-        ))}
-      </div>
+    {/* Render News Section */}
+    <div>
+      <h2 className="text-xl md:text-2xl font-semibold mb-4">News</h2>
+      {articles.filter(article => article.tag === 'News').map((article, index) => (
+        <div key={index} className="mb-6">
+          <h3 className="text-lg md:text-xl font-bold">{article.title}</h3>
+          <p>{article.content}</p>
+        </div>
+      ))}
     </div>
+
+    {/* Render Events Section */}
+    <div className="mt-10">
+      <h2 className="text-xl md:text-2xl font-semibold mb-4">Events</h2>
+      {articles.filter(article => article.tag === 'Event').map((article, index) => (
+        <div key={index} className="mb-6">
+          <h3 className="text-lg md:text-xl font-bold">{article.title}</h3>
+          <p>{article.content}</p>
+        </div>
+      ))}
     </div>
+  </div>
+</div>
   );
 };
 

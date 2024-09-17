@@ -89,7 +89,7 @@ export const Home = () => {
                 </Link>
               </h2>
               <div className="relative">
-                {/* Left Scroll Arrow */}
+                {/* Left Scroll Arrow */} 
                 {showLeftArrow && (
                   <button
                     className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-600 p-2 rounded-full"

@@ -1,50 +1,36 @@
-// Books.js
-import { useState, useEffect } from "react";
-import axios from "axios";
-import AddBook from "../components/AddBook";
-import SearchBook from "../components/SearchBook";
-import Navbar from "../components/Navbar";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setBooksByCategory } from "../../features/books/booksSlice"; // Redux action to set initial books/categories
+import AddBook from "../components/AddBook"; // AddBook component
+import SearchBook from "../components/SearchBook"; // SearchBook component
+import Navbar from "../components/Navbar"; // Navbar component
 
 function Books() {
-  const [books, setBooks] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  
+  // Get books from categories safely
+  const booksByCategory = useSelector((state) => state.books.booksByCategory || {});
+  const books = Object.values(booksByCategory).flat();
+
+  // Get all available categories safely
+  const categories = Object.keys(booksByCategory);
 
   useEffect(() => {
-    fetchBooks();
-    fetchCategories();
-  }, []);
-
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/upload/books");
-      setBooks(response.data);
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/upload/category");
-      setCategories(response.data.categories || []);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
+    // Dispatch action to set books and categories from local JSON (only if not set)
+    dispatch(setBooksByCategory());
+  }, [dispatch]);
 
   return (
     <>
       <div>
-      <Navbar/>
+        <Navbar />
       </div>
-      <div className=" bg-gray-50 dark:bg-gray-900 p-4 relative">
-      
-      <div className="flex flex-col lg:flex-row gap-3">
-        <AddBook categories={categories} fetchBooks={fetchBooks} />
-        <SearchBook categories={categories} books={books} setBooks={setBooks} />
+      <div className="bg-gray-50 dark:bg-gray-900 p-4 relative">
+        <div className="flex flex-col lg:flex-row gap-3">
+          <AddBook categories={categories} />
+          <SearchBook categories={categories} books={books} />
+        </div>
       </div>
-    </div>
     </>
   );
 }

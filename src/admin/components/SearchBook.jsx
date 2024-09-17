@@ -1,9 +1,13 @@
-// SearchBook.js
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { FaLongArrowAltRight, FaLongArrowAltLeft  } from "react-icons/fa";
+import { useDispatch, useSelector } from 'react-redux';
+import { FaLongArrowAltRight, FaLongArrowAltLeft } from 'react-icons/fa';
+import { setSearchResults, deleteBook } from '../../features/books/booksSlice';
 
-function SearchBook({ categories, books, setBooks }) {
+function SearchBook({ categories }) {
+  const dispatch = useDispatch();
+  const booksByCategory = useSelector((state) => state.books.booksByCategory || {});
+  const books = useSelector((state) => state.books.searchResults || []);
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [deleteEnabled, setDeleteEnabled] = useState({});
@@ -14,27 +18,17 @@ function SearchBook({ categories, books, setBooks }) {
     searchBooks();
   }, [searchTerm, selectedCategory]);
 
-  const searchBooks = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/upload/search', {
-        params: {
-          q: searchTerm,
-          category: selectedCategory,
-        }
-      });
-      setBooks(response.data);
-    } catch (error) {
-      console.error('Error searching books:', error);
-    }
+  const searchBooks = () => {
+    const allBooks = Object.values(booksByCategory).flat();
+    const filteredBooks = allBooks.filter(book =>
+      (searchTerm ? book.title.toLowerCase().includes(searchTerm.toLowerCase()) : true) &&
+      (selectedCategory ? book.category === selectedCategory : true)
+    );
+    dispatch(setSearchResults(filteredBooks));
   };
 
-  const deleteBookByTitle = async (title) => {
-    try {
-      await axios.delete(`http://localhost:8000/upload/title/${encodeURIComponent(title)}`);
-      searchBooks(); // Refresh the list of books
-    } catch (error) {
-      console.error('Error deleting book:', error);
-    }
+  const handleDelete = (id) => {
+    dispatch(deleteBook({ id }));
   };
 
   const handleCheckboxChange = (id) => {
@@ -101,7 +95,7 @@ function SearchBook({ categories, books, setBooks }) {
                   className="mr-2"
                 />
                 <button
-                  onClick={() => deleteBookByTitle(book.title)}
+                  onClick={() => handleDelete(book.id)}
                   disabled={!deleteEnabled[book.id]}
                   className="bg-red-600 text-white p-2 ml-2 rounded disabled:bg-gray-500"
                 >
@@ -115,23 +109,22 @@ function SearchBook({ categories, books, setBooks }) {
         )}
       </ul>
 
-      <div className="flex justify-between mt-4 pt-10 ">
+      <div className="flex justify-between mt-4 pt-10">
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
           className="bg-blue-600 text-white p-2 flex w-48 text-2xl justify-center rounded disabled:bg-blue-400"
         >
-             <FaLongArrowAltLeft  className=' pt-1 text-3xl '/>
+          <FaLongArrowAltLeft className="pt-1 text-3xl" />
           Previous
-         
         </button>
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className="bg-blue-600 text-white p-2 w-52 text-2xl flex justify-center  rounded disabled:bg-blue-400"
+          className="bg-blue-600 text-white p-2 w-52 text-2xl flex justify-center rounded disabled:bg-blue-400"
         >
           Next
-          <FaLongArrowAltRight className=' pt-1 text-4xl '/>
+          <FaLongArrowAltRight className="pt-1 text-4xl" />
         </button>
       </div>
     </div>

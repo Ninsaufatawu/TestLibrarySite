@@ -12,6 +12,7 @@ import NotificationPage from './pages/NotificationPage';
 import FavoritePage from "./pages/FavoritePage";
 import {NewsEventPage} from "./pages/NewsEventPage"
 import TrendingBooks from "./components/TrendingBooks";
+import HelpPage from "./pages/HelpPage";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/favorite" element={<FavoritePage/>}/>
           <Route path="/news" element={<NewsEventPage/>}/>
           <Route path="/trending-books" element={<TrendingBooks/>}/>
+          <Route path="/help" element={<HelpPage/>} />
         </Routes>
       </Router>
     </SettingsProvider>
