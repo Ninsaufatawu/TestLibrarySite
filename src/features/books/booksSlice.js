@@ -5,7 +5,6 @@ import booksData from "../../books.json"; // Import local JSON file
 const initialState = {
   booksByCategory: booksData.categories || {},
   searchResults: [],
-  categories: [], // Add categories to the state
 };
 
 // Create a slice
@@ -34,9 +33,9 @@ const booksSlice = createSlice({
     deleteBook: (state, action) => {
       const { id } = action.payload;
       Object.keys(state.booksByCategory).forEach((category) => {
-        state.booksByCategory[category] = state.booksByCategory[category].filter(
-          (book) => book.id !== id
-        );
+        state.booksByCategory[category] = state.booksByCategory[
+          category
+        ].filter((book) => book.id !== id);
       });
     },
     setSearchResults: (state, action) => {
@@ -44,19 +43,6 @@ const booksSlice = createSlice({
     },
     clearSearchResults: (state) => {
       state.searchResults = [];
-    },
-    addCategory: (state, action) => { // New reducer to handle adding a category
-      const newCategory = action.payload;
-      if (!state.categories.includes(newCategory)) {
-        state.categories.push(newCategory);
-        state.booksByCategory[newCategory] = [];
-      }
-    },
-    deleteCategory: (state, action) => { // New reducer to handle deleting a category
-      const categoryToDelete = action.payload;
-      const { [categoryToDelete]: _, ...remainingCategories } = state.booksByCategory;
-      state.booksByCategory = remainingCategories;
-      state.categories = state.categories.filter(category => category !== categoryToDelete);
     },
   },
 });
@@ -69,8 +55,6 @@ export const {
   deleteBook,
   setSearchResults,
   clearSearchResults,
-  addCategory, // Export the new action
-  deleteCategory, // Export the new action
 } = booksSlice.actions;
 
 // Export reducer

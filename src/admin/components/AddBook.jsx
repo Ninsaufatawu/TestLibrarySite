@@ -1,12 +1,9 @@
 import { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { addBook } from '../../features/books/booksSlice'; // Adjust import based on your file structure
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import {Link }from "react-router-dom"
 
-function AddBook({ categories }) {
+function AddBook({ categories, fetchBooks }) {
   const [newBook, setNewBook] = useState({
-    id: uuidv4(), // Generate a unique ID for the book
     title: '',
     author: '',
     description: '',
@@ -20,8 +17,6 @@ function AddBook({ categories }) {
   const imageInputRef = useRef(null);
   const pdfInputRef = useRef(null);
 
-  const dispatch = useDispatch();
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBook({ ...newBook, [name]: value });
@@ -32,30 +27,40 @@ function AddBook({ categories }) {
     setNewBook({ ...newBook, [name]: files[0] });
   };
 
-  const handleAddBook = () => {
-    // Dispatch action to add book to Redux store
-    dispatch(addBook(newBook));
-
-    // Clear the form and reset the state
-    setNewBook({
-      id: uuidv4(), // Generate a new unique ID for the next book
-      title: '',
-      author: '',
-      description: '',
-      published: '',
-      category: '',
-      image: null,
-      pdf: null,
-    });
-
-    if (imageInputRef.current) {
-      imageInputRef.current.value = '';
-    }
-    if (pdfInputRef.current) {
-      pdfInputRef.current.value = '';
+  const addBook = async () => {
+    const formData = new FormData();
+    for (const key in newBook) {
+      if (newBook[key]) {
+        formData.append(key, newBook[key]);
+      }
     }
 
-    setIsDialogOpen(true); // Show dialog
+    try {
+      await axios.post(`http://localhost:8000/upload/${newBook.category}`, formData);
+
+      // Clear the form and reset the state
+      setNewBook({
+        title: '',
+        author: '',
+        description: '',
+        published: '',
+        category: '',
+        image: null,
+        pdf: null,
+      });
+
+      if (imageInputRef.current) {
+        imageInputRef.current.value = '';
+      }
+      if (pdfInputRef.current) {
+        pdfInputRef.current.value = '';
+      }
+
+      fetchBooks(); // Refresh the list of books
+      setIsDialogOpen(true); // Show dialog
+    } catch (error) {
+      console.error('Error adding book:', error);
+    }
   };
 
   const closeDialog = () => {
@@ -63,7 +68,7 @@ function AddBook({ categories }) {
   };
 
   return (
-    <div className="flex-1 lg:w-1/2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg mb-8">
+    <div className="flex-1 lg:w-1/2 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg mb-8  ">
       {/* Dialog */}
       {isDialogOpen && (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
@@ -81,7 +86,7 @@ function AddBook({ categories }) {
 
       <h2 className="text-2xl font-bold mb-2 text-center dark:text-white">Add New Book</h2>
       {['title', 'author', 'description', 'published'].map(field => (
-        <div className="mb-1" key={field}>
+        <div className=" mb-1" key={field}>
           <label htmlFor={field} className="block text-lg font-medium dark:text-white capitalize">{field}</label>
           <input
             id={field}
@@ -94,8 +99,8 @@ function AddBook({ categories }) {
           />
         </div>
       ))}
-      <div className="mb-1">
-        <label htmlFor="category" className="block text-lg font-medium dark:text-white">Select Category</label>
+      <div className=" mb-1">
+        <label htmlFor="category" className="block text-lg font-medium dark:text-white" >Select Category</label>
         <select
           id="category"
           name="category"
@@ -103,17 +108,20 @@ function AddBook({ categories }) {
           onChange={handleInputChange}
           className="border p-2 mb-2 w-full text-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
         >
-          <option value="">Select Category</option>
+          <option value="mb-1">Select Category</option>
+          
           {categories.map(category => (
             <option key={category} value={category}>{category}</option>
           ))}
-          <option value="">
-            <Link to="/category">Create New Category</Link>
+          <option value=""> 
+            <Link to="/category">
+              create New Category
+            </Link>
           </option>
         </select>
       </div>
       {['image', 'pdf'].map(field => (
-        <div className="mb-1" key={field}>
+        <div className=" mb-1" key={field}>
           <label htmlFor={field} className="block text-lg font-medium dark:text-white capitalize">{field}</label>
           <input
             id={field}
@@ -125,7 +133,7 @@ function AddBook({ categories }) {
           />
         </div>
       ))}
-      <button onClick={handleAddBook} className="bg-blue-600 text-white p-2 w-full text-lg rounded">Add Book</button>
+      <button onClick={addBook} className="bg-blue-600 text-white p-2 w-full text-lg rounded">Add Book</button>
     </div>
   );
 }

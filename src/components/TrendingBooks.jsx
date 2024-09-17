@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import booksData from '../books.json'; // Import local JSON file
+import { Link } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const TrendingBooks = () => {
   const [trendingBooks, setTrendingBooks] = useState([]);
@@ -8,7 +10,6 @@ const TrendingBooks = () => {
     const fetchTrendingBooks = () => {
       try {
         const categorizedBooks = booksData.categories || {};
-        console.log(categorizedBooks); // Debug log
         setTrendingBooks(categorizedBooks.Trending || []);
       } catch (error) {
         console.error("Error loading books:", error);
@@ -19,26 +20,60 @@ const TrendingBooks = () => {
   }, []);
 
   return (
-    <div className="p-8">
-      <h2 className="text-3xl font-bold mb-6">Trending Books</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {trendingBooks.length > 0 ? (
-          trendingBooks.map((book) => (
-            <div key={book.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <img
-                src={`/uploads/${book.image}`}
-                alt={book.title}
-                className="w-full h-60 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
-                <p className="text-gray-600">{book.author}</p>
-                <p className="text-gray-800 mt-2">{book.description}</p>
-              </div>
-            </div>
-          ))
+    <div className="dark:bg-gray-900 min-h-screen">
+      <div className="pb-14 p-8 w-60 dark:bg-gray-900">
+        <Link to="/" className="flex items-center gap-4 text-blue-600 dark:text-blue-400 hover:underline">
+          <FaArrowLeft className="text-xl" />
+          <p className="font-bold text-2xl">Back Home</p>
+        </Link>
+      </div>
+      <div className="p-10 mx-auto max-w-screen-xl dark:bg-gray-900">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Trending Books</h1>
+        {trendingBooks.length === 0 ? (
+          <p className="text-lg text-gray-600 dark:text-gray-300">No trending books available.</p>
         ) : (
-          <p>No trending books available.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 dark:bg-gray-900">
+            {trendingBooks.map((book) => (
+              <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{book.title}</h2>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{book.author}</p>
+                {book.image && (
+                  <img
+                    src={`/uploads/${book.image}`}
+                    alt={book.title}
+                    className="w-full h-64 object-cover mb-4 rounded"
+                  />
+                )}
+                <p className="text-gray-800 dark:text-gray-200 mt-2 line-clamp-3">{book.description}</p>
+                <div className="mt-4">
+                  {book.pdf && (
+                    <button
+                      onClick={() => window.open(`/uploads/${book.pdf}`, '_blank')}
+                      className="w-full py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 mb-2"
+                    >
+                      Read
+                    </button>
+                  )}
+                  {book.pdf && (
+                    <button
+                      onClick={() => {
+                        const url = `/uploads/${book.pdf}`;
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', book.pdf);
+                        document.body.appendChild(link);
+                        link.click();
+                        link.parentNode.removeChild(link);
+                      }}
+                      className="w-full py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75 mb-2"
+                    >
+                      Download
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

@@ -107,41 +107,41 @@ const articles = [
 
 export const NewsEventPage = () => {
   return (
-    <div className='flex flex-col md:flex-row '>
-  <div className='md:fixed'>
-    <SideBar />
-  </div>
-  <div className="p-10 dark:bg-gray-800 dark:text-white md:pl-80">
-    <h1 className="text-2xl md:text-3xl font-bold mb-8 flex gap-3">
-      <div className='pt-1'>
-        <MdEventAvailable />
+    <div className='flex flex-col md:flex-row bg-gray-100 dark:bg-gray-900'>
+      <div className='md:fixed'>
+        <SideBar />
       </div>
-      News & Events
-    </h1>
+      <div className="p-10 dark:bg-gray-800 dark:text-white md:pl-80 w-full">
+        <h1 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3">
+          <div className='pt-1'>
+            <MdEventAvailable className="text-3xl" />
+          </div>
+          <span>News & Events</span>
+        </h1>
 
-    {/* Render News Section */}
-    <div>
-      <h2 className="text-xl md:text-2xl font-semibold mb-4">News</h2>
-      {articles.filter(article => article.tag === 'News').map((article, index) => (
-        <div key={index} className="mb-6">
-          <h3 className="text-lg md:text-xl font-bold">{article.title}</h3>
-          <p>{article.content}</p>
+        {/* Render News Section */}
+        <div className="mb-10">
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-300">News</h2>
+          {articles.filter(article => article.tag === 'News').map((article, index) => (
+            <div key={index} className="mb-6 p-4 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+              <h3 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white">{article.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300">{article.content}</p>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
 
-    {/* Render Events Section */}
-    <div className="mt-10">
-      <h2 className="text-xl md:text-2xl font-semibold mb-4">Events</h2>
-      {articles.filter(article => article.tag === 'Event').map((article, index) => (
-        <div key={index} className="mb-6">
-          <h3 className="text-lg md:text-xl font-bold">{article.title}</h3>
-          <p>{article.content}</p>
+        {/* Render Events Section */}
+        <div>
+          <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-300">Events</h2>
+          {articles.filter(article => article.tag === 'Event').map((article, index) => (
+            <div key={index} className="mb-6 p-4 bg-white dark:bg-gray-700 rounded-lg shadow-md">
+              <h3 className="text-lg md:text-xl font-bold text-gray-800 dark:text-white">{article.title}</h3>
+              <p className="text-gray-600 dark:text-gray-300">{article.content}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
-  </div>
-</div>
   );
 };
 

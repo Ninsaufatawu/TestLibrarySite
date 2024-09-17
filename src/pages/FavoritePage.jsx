@@ -17,7 +17,7 @@ const FavoritePage = () => {
   };
 
   const handleDownload = (pdf) => {
-    const url = `/uploads/${pdf}`; // Use local path for download
+    const url = `/uploads/${pdf}`;
     const link = document.createElement('a');
     link.href = url;
     link.setAttribute('download', pdf);
@@ -27,52 +27,50 @@ const FavoritePage = () => {
   };
 
   return (
-    <>
-      <div className='pb-14 p-8'>
-        <Link to={"/"} className='flex gap-4'>
-          <div className='pt-2 text-xl'>
-            <FaArrowLeft />
-          </div>
-          <p className='font-bold text-2xl'>Back Home</p>
+    <div className='dark:bg-gray-900'>
+      <div className="pb-14 p-8 w-60  dark:bg-gray-900  ">
+        <Link to="/" className="flex items-center gap-4 text-blue-600 dark:text-blue-400 hover:underline">
+          <FaArrowLeft className="text-xl" />
+          <p className="font-bold text-2xl">Back Home</p>
         </Link>
       </div>
-      <div className="p-10 pl-16 dark:bg-gray-800 dark:text-white mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Favorite Books</h1>
+      <div className="p-10 mx-auto max-w-screen-xl dark:bg-gray-900">
+        <h1 className="text-3xl font-bold mb-8 text-gray-800 dark:text-white">Favorite Books</h1>
         {favoriteBooks.length === 0 ? (
-          <p>No favorite books added yet.</p>
+          <p className="text-lg text-gray-600 dark:text-gray-300">No favorite books added yet.</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 dark:bg-gray-900">
             {favoriteBooks.map(book => (
-              <div key={book.id} className="bg-gray-100 w-72 dark:bg-gray-700 p-4 rounded-lg shadow-md">
-                <h2 className="text-xl font-semibold mb-2">{book.title}</h2>
-                <p className="text-gray-700 dark:text-gray-200 mb-4">{book.author}</p>
+              <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{book.title}</h2>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">{book.author}</p>
                 {book.image && (
                   <img
-                    src={`/uploads/${book.image}`} // Use local path for image
+                    src={`/uploads/${book.image}`}
                     alt={book.title}
-                    className="w-48 h-64 object-cover mb-4 rounded"
+                    className="w-full h-64 object-cover mb-4 rounded"
                   />
                 )}
                 <div className="flex flex-col gap-2">
                   {book.pdf && (
                     <button
-                      onClick={() => window.open(`/uploads/${book.pdf}`, '_blank')} // Use local path for PDF
-                      className="w-48 py-2 px-4 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
+                      onClick={() => window.open(`/uploads/${book.pdf}`, '_blank')}
+                      className="w-full py-2 bg-green-500 text-white font-semibold rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75"
                     >
                       Read
                     </button>
                   )}
                   {book.pdf && (
                     <button
-                      onClick={() => handleDownload(book.pdf)} // Use local path for PDF
-                      className="w-48 py-2 px-4 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
+                      onClick={() => handleDownload(book.pdf)}
+                      className="w-full py-2 bg-gray-200 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-75"
                     >
                       Download
                     </button>
                   )}
                   <button
                     onClick={() => removeFavorite(book.id)}
-                    className="w-48 py-2 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
+                    className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75"
                   >
                     Remove Book
                   </button>
@@ -82,7 +80,7 @@ const FavoritePage = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

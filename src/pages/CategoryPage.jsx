@@ -33,47 +33,40 @@ export const CategoryPage = () => {
   }, [category]);
 
   return (
-    <>
-    <div className='pb-14 p-8'>
-        <Link to={"/"} className='flex gap-4'>
-          <div className='pt-2 text-xl'>
-            <FaArrowLeft />
-          </div>
-          <p className='font-bold text-2xl'>Back Home</p>
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen">
+      <div className="p-8 ">
+        <Link to="/" className="flex items-center w-40 gap-2 mb-6 text-blue-600 hover:underline">
+          <FaArrowLeft className="text-xl" />
+          <span className="font-bold text-2xl">Back Home</span>
         </Link>
+
+        <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-8">{category || 'All Books'}</h1>
+
+        {books.length === 0 ? (
+          <div className="text-lg text-gray-600 dark:text-gray-300">No books available in this category.</div>
+        ) : (
+          <div className="flex flex-wrap justify-center gap-6">
+            {books.map((book) => (
+              <div key={book.id} className="bg-white dark:bg-gray-700 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105">
+                <Link to={`/book/${book.id}`} className="block">
+                  <img
+                    src={`/uploads/${book.image}`} // Adjust as needed for local file path
+                    alt={book.title}
+                    className="w-64 h-80 object-cover"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">{book.title}</h2>
+                    <button className="mt-2 w-full py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition">
+                      Read More
+                    </button>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    <div className="p-8 dark:bg-gray-800 dark:text-white">
-      <h1 className="text-3xl font-bold mb-8">{category || 'All Books'}</h1>
-      {books.length === 0 ? (
-        <p>No books available in this category.</p>
-      ) : (
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-          {books.map((book) => (
-            <div key={book.id} className="rounded-xl drop-shadow-2xl w-36">
-              <Link to={`/book/${book.id}`}>
-                <div className="relative gap-1 justify-center text-center pt-4">
-                  {book.image && (
-                    <img
-                      src={`/uploads/${book.image}`} // Adjust as needed for local file path
-                      alt={book.title}
-                      className="w-52 h-48 object-fit"
-                    />
-                  )}
-                </div>
-                <div className="pt-5">
-                  <button
-                    className="p-2 border justify-center text-lg dark:bg-slate-800 text-center rounded-md w-36 bg-blue-600 text-white"
-                  >
-                    Read More
-                  </button>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
-    </>
   );
 };
 

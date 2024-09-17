@@ -66,24 +66,24 @@ export const Home = () => {
   };
 
   if (loading) {
-    return <div className="text-center">Loading...</div>;
+    return <div className="text-center text-lg">Loading...</div>;
   }
 
   if (error) {
-    return <div className="text-red-500 text-center">{error}</div>;
+    return <div className="text-red-500 text-center text-lg">{error}</div>;
   }
 
   return (
     <div className="overflow-y-scroll dark:bg-gray-800 pb-20">
       <div className="dark:text-white">
-        <div className='fixed w-full dark:h-16 h-16 z-20 bg-white'>
+        <div className='fixed w-full dark:h-16 h-16 z-20 bg-white shadow-md'>
           <SearchBar />
         </div>
         <div className='p-8 pt-24'>
           <Banner />
           {Object.keys(booksByCategory).map((category) => (
-            <div key={category}>
-              <h2 className="text-2xl font-bold mb-4 pt-10">
+            <div key={category} className="mb-10">
+              <h2 className="text-3xl font-bold mb-4 pt-10 text-gray-800 dark:text-white">
                 <Link to={`/category/${category}`}>
                   {category}
                 </Link>
@@ -92,7 +92,7 @@ export const Home = () => {
                 {/* Left Scroll Arrow */} 
                 {showLeftArrow && (
                   <button
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-600 p-2 rounded-full"
+                    className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-600 p-2 rounded-full transition duration-300 hover:bg-gray-500"
                     onClick={() => handleScroll(category, 'left')}
                   >
                     <FaChevronLeft className="text-white" />
@@ -102,12 +102,12 @@ export const Home = () => {
                 <div
                   ref={(el) => (scrollRefs.current[category] = el)} // Assign ref dynamically to each category
                   onScroll={() => handleScrollCheck(category)}
-                  className="overflow-x-auto flex gap-10 scrollbar-hide"
+                  className="overflow-x-auto flex gap-6 scrollbar-hide"
                 >
                   {booksByCategory[category].map((book) => (
                     <div
                       key={book.id}
-                      className="flex-shrink-0 w-1/2 md:w-64 rounded-xl"
+                      className="flex-shrink-0 w-1/2 md:w-64 rounded-xl overflow-hidden shadow-lg transition-transform transform hover:scale-105"
                     >
                       <Link to={`/book/${book.id}`}>
                         <div className="relative gap-1 justify-center text-center pt-4">
@@ -120,7 +120,7 @@ export const Home = () => {
                           )}
                         </div>
                         <div className="pt-2">
-                          <button className="p-2 border justify-center text-sm md:text-lg dark:bg-slate-800 text-center rounded-md w-full bg-blue-600 text-white">
+                          <button className="p-2 border justify-center text-sm md:text-lg dark:bg-slate-800 text-center rounded-md w-full bg-blue-600 text-white shadow-md hover:bg-blue-700 transition duration-300">
                             Read More
                           </button>
                         </div>
@@ -132,7 +132,7 @@ export const Home = () => {
                 {/* Right Scroll Arrow */}
                 {showRightArrow && (
                   <button
-                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-600 p-2 rounded-full"
+                    className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-600 p-2 rounded-full transition duration-300 hover:bg-gray-500"
                     onClick={() => handleScroll(category, 'right')}
                   >
                     <FaChevronRight className="text-white" />
