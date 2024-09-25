@@ -80,8 +80,13 @@ export const BookDetails = () => {
   };
 
   const dummyReviews = [
-    { name: "Alice", comment: "Great book!", rating: 5, date: "2023-01-01" },
-    { name: "Bob", comment: "Very informative.", rating: 4, date: "2023-01-02" },
+    { name: "Alice", comment: "Absolutely loved this book! A must-read for everyone.", rating: 5, date: "2023-01-01" },
+    { name: "Bob", comment: "Very informative. It opened my eyes to new ideas.", rating: 4, date: "2023-01-02" },
+    { name: "Charlie", comment: "An engaging read, but I wish it went deeper into the topic.", rating: 3, date: "2023-01-03" },
+    { name: "Dana", comment: "I couldn't put it down! The characters felt so real.", rating: 5, date: "2023-01-04" },
+    { name: "Eve", comment: "Interesting perspective, but some parts were slow.", rating: 3, date: "2023-01-05" },
+    { name: "Frank", comment: "A great addition to my collection! Highly recommend.", rating: 5, date: "2023-01-06" },
+    { name: "Grace", comment: "Informative and well-written. Worth the read!", rating: 4, date: "2023-01-07" },
   ];
 
   return (

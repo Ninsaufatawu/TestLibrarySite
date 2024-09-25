@@ -13,6 +13,7 @@ import FavoritePage from "./pages/FavoritePage";
 import {NewsEventPage} from "./pages/NewsEventPage"
 import TrendingBooks from "./components/TrendingBooks";
 import HelpPage from "./pages/HelpPage";
+import EbookReader from "./pages/Ebook";
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
           <Route path="/news" element={<NewsEventPage/>}/>
           <Route path="/trending-books" element={<TrendingBooks/>}/>
           <Route path="/help" element={<HelpPage/>} />
+          <Route path="/ebook" element={<EbookReader/>} />
+
         </Routes>
       </Router>
     </SettingsProvider>

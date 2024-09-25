@@ -10,7 +10,7 @@ const SideBar = () => {
       <div className="h-screen top-10 w-60 dark:bg-slate-700 bg-slate-50 flex flex-col p-4 md:w-72 hidden md:flex">
         <div className="flex items-center mb-6">
           <div>
-            <h1 className="text-xl font-bold justify-center p-2 pl-16 dark:text-white">NINSAU LABS</h1>
+            <h1 className="text-xl font-bold justify-center p-2 pl-16 dark:text-white">NINSAU</h1>
           </div>
         </div>
         <nav className="flex-1 text-lg font-medium">
@@ -40,10 +40,10 @@ const SideBar = () => {
               </NavLink>
             </li>
             <li>
-              <Link to="/active-bid" className="flex items-center p-2 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg">
-                <AiOutlineTag className="mr-3" />
-                <span>Active Bid</span>
-              </Link>
+              <NavLink to="/ebook" className={({ isActive }) => `flex items-center p-2 rounded-lg hover:bg-gray-200 ${isActive ? 'bg-slate-200' : 'dark:text-gray-300 dark:hover:bg-gray-800'}`}>
+                <AiOutlineSetting className="mr-3" />
+                <span>eBook</span>
+              </NavLink>
             </li>
           </ul>
         </nav>

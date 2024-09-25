@@ -35,8 +35,10 @@ const TrendingBooks = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 dark:bg-gray-900">
             {trendingBooks.map((book) => (
               <div key={book.id} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+                <Link to={`/book/${book.id}`}>
                 <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-white">{book.title}</h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{book.author}</p>
+                
                 {book.image && (
                   <img
                     src={`/uploads/${book.image}`}
@@ -44,7 +46,7 @@ const TrendingBooks = () => {
                     className="w-full h-64 object-cover mb-4 rounded"
                   />
                 )}
-                <p className="text-gray-800 dark:text-gray-200 mt-2 line-clamp-3">{book.description}</p>
+                </Link>
                 <div className="mt-4">
                   {book.pdf && (
                     <button
