@@ -39,12 +39,6 @@ const SideBar = () => {
                 <span>Settings</span>
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/ebook" className={({ isActive }) => `flex items-center p-2 rounded-lg hover:bg-gray-200 ${isActive ? 'bg-slate-200' : 'dark:text-gray-300 dark:hover:bg-gray-800'}`}>
-                <AiOutlineSetting className="mr-3" />
-                <span>eBook</span>
-              </NavLink>
-            </li>
           </ul>
         </nav>
         <div className="mt-auto p-4 bg-white shadow-2xl dark:bg-gray-800 rounded-lg text-center">
